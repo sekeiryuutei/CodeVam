@@ -29,12 +29,19 @@ carpeta `assets/` junto al `index.html`.
 - **Animación del terminal del hero** → `assets/script.js`
   - El guion de texto que se "escribe" está en el arreglo `script` al inicio
     del archivo; puedes cambiar las líneas ahí sin tocar el resto del código.
+- **Clientes y proyectos** → sección `#clientes` en `index.html`
+  - Cada cliente en producción es una tarjeta `<a class="card">` con enlace a
+    su sitio. Cada proyecto sin sitio público es un `<div class="card
+    is-project">` (borde punteado). Copia una tarjeta existente del tipo que
+    necesites y cambia el texto para agregar una nueva.
 
 ## Próximos pasos sugeridos
 
 - El contacto principal ahora es WhatsApp (3156793777). Cuando tengas correo
   corporativo, puedes agregarlo de nuevo en la sección `#contacto` de `index.html`.
-- Cuando tengas clientes reales, reemplazar la sección "clientes" (`#clientes`
-  en `index.html`) por casos de éxito o logos reales.
+- Confirmar/ajustar las descripciones de victorburbano.com, villajuana.co,
+  oceanshapespa.com e intergroup.com.co en `#clientes` — quedaron con una
+  frase genérica marcada `<!-- TODO: confirmar descripción -->` porque no
+  tengo el detalle exacto de cada sitio.
 - Cuando Vitriniando esté listo para lanzar, quitar el badge "en desarrollo"
   en la sección `#productos` y enlazar el botón a la app real.
