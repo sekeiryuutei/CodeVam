@@ -39,7 +39,7 @@
   section{ padding:96px 0; }
   h1,h2,h3{ font-family:var(--font-head); font-weight:600; letter-spacing:-0.02em; }
   .eyebrow{
-    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.06em;
+    font-family:var(--font-mono); font-size:14px; letter-spacing:0.06em;
     color: var(--blue); text-transform:lowercase; display:flex; align-items:center; gap:8px;
     margin-bottom:14px;
   }
@@ -63,6 +63,15 @@
   .navlinks{ display:flex; align-items:center; gap:32px; }
   .navlinks a:not(.btn){ font-size:14.5px; color:var(--muted); transition:color .15s; }
   .navlinks a:not(.btn):hover{ color:var(--ink); }
+  .lang-toggle{ display:flex; align-items:center; gap:2px; padding:3px; border-radius:8px; border:1px solid var(--line); }
+  .lang-toggle .lang-option{
+    font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--muted);
+    background:transparent; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;
+    transition:background .15s, color .15s;
+  }
+  .lang-toggle .lang-option:hover{ color:var(--ink); }
+  .lang-toggle .lang-option.is-active{ background:var(--slate-2); color:#fff; }
+  .lang-toggle .lang-option.is-active:hover{ color:#fff; }
   .btn{
     font-family:var(--font-body); font-weight:600; font-size:14.5px;
     padding:11px 20px; border-radius:8px; display:inline-flex; align-items:center; gap:8px;
@@ -120,7 +129,7 @@
     transition:border-color .15s, transform .15s;
   }
   .card:hover{ border-color:var(--gray); transform:translateY(-2px); }
-  .card .tag{ font-family:var(--font-mono); font-size:12.5px; color:var(--blue); display:block; margin-bottom:14px; }
+  .card .tag{ font-family:var(--font-mono); font-size:14px; color:var(--blue); display:block; margin-bottom:14px; }
   .card h3{ font-size:17.5px; margin-bottom:8px; }
   .card p{ font-size:14px; color:var(--muted); }
 
@@ -194,6 +203,9 @@
   .foot-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
   .foot-row .brand{ opacity:0.9; }
   footer p{ font-size:13px; color:var(--muted); }
+  .social-links{ display:flex; align-items:center; gap:16px; }
+  .social-links a{ color:var(--muted); display:flex; transition:color .15s, transform .15s; }
+  .social-links a:hover{ color:var(--blue); transform:translateY(-1px); }
 
   /* ---------- whatsapp flotante ---------- */
   .whatsapp-float{
@@ -203,4 +215,14 @@
     box-shadow:0 10px 24px -6px rgba(37,211,102,0.55);
     transition:transform .15s;
   }
+  .whatsapp-float::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    border-radius:50%; background:#25D366; opacity:0.55;
+    animation:wa-pulse 2.2s ease-out infinite;
+  }
   .whatsapp-float:hover{ transform:scale(1.06); }
+  @keyframes wa-pulse{
+    0%{ transform:scale(1); opacity:0.55; }
+    100%{ transform:scale(1.9); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .whatsapp-float::before{ animation:none; opacity:0; } }
