@@ -1,13 +1,5 @@
 /*
   codevam — interacciones de la landing page
-  --------------------------------------------
-  Anima el bloque de terminal del hero escribiendo el guion línea por línea,
-  en el idioma activo (window.codevamLang, definido por assets/i18n.js, que
-  se carga antes que este archivo). Respeta prefers-reduced-motion: si el
-  usuario lo tiene activado, muestra el contenido final sin animar.
-
-  Expone window.codevamTerminal.renderStatic(lang) para que i18n.js pueda
-  actualizar el terminal cuando cambia el idioma, sin repetir la animación.
 */
 
 const term = document.getElementById('term');
@@ -40,6 +32,7 @@ function getScript(lang){
 }
 
 function renderStatic(lang){
+  if (!term) return;
   term.innerHTML = getScript(lang).map(l => {
     const cls = l.t === 'prompt' ? 'prompt' : (l.t === 'ok' ? 'ok' : 'out');
     return `<div class="line"><span class="${cls}">${l.text}</span></div>`;
@@ -54,6 +47,7 @@ async function typeLine(el, text, speed){
 }
 
 async function run(lang){
+  if (!term) return;
   const script = getScript(lang);
   if(reduce){ renderStatic(lang); return; }
   term.innerHTML = '';
@@ -69,10 +63,135 @@ async function run(lang){
   }
   const cur = document.createElement('span');
   cur.className = 'cursor';
-  term.lastChild.appendChild(cur);
+  if (term.lastChild) {
+    term.lastChild.appendChild(cur);
+  }
 }
 
-// assets/i18n.js llama a esto en cada cambio de idioma (sin re-animar)
 window.codevamTerminal = { renderStatic };
-
 run(window.codevamLang || 'es');
+
+/* -------------------------------------------------------------------------- */
+/*                          LÓGICA DEL MODAL DE WHATSAPP                      */
+/* -------------------------------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('wa-modal');
+  const waLinks = document.querySelectorAll('.wa-link');
+  const waForm = document.getElementById('wa-form');
+  const waClose = document.getElementById('wa-close');
+
+  const WEBHOOK_URL = ''; // Dejar vacío si no hay backend activo
+
+  // Abrir modal al hacer clic en enlaces de WhatsApp
+  waLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    });
+  });
+
+  // Cerrar el modal
+  if (waClose) {
+    waClose.addEventListener('click', () => {
+      if (modal) modal.style.display = 'none';
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+
+  // Enviar formulario
+  if (waForm) {
+    waForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('wa-submit-btn');
+      const nombreInput = document.getElementById('wa-nombre');
+      const servicioInput = document.getElementById('wa-servicio');
+      
+      const nombre = nombreInput ? nombreInput.value.trim() : '';
+      if (!nombre) return;
+
+      let servicio = 'Software a medida';
+      if (servicioInput && servicioInput.selectedIndex !== -1) {
+        servicio = servicioInput.options[servicioInput.selectedIndex].text;
+      }
+      
+      const lang = window.codevamLang || 'es';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS.modal_processing) 
+          ? (TRANSLATIONS.modal_processing[lang] || 'Procesando...') 
+          : 'Procesando...';
+      }
+
+      try {
+        const leadData = {
+          nombre,
+          servicio,
+          idioma: lang,
+          fecha: new Date().toISOString()
+        };
+        
+        // 1. Guardar copia local en localStorage
+        try {
+          const existingLeads = JSON.parse(localStorage.getItem('codevam_leads') || '[]');
+          existingLeads.push(leadData);
+          localStorage.setItem('codevam_leads', JSON.stringify(existingLeads));
+        } catch (err) {
+          console.error('Error al guardar en localStorage:', err);
+        }
+
+        // 2. Enviar a webhook solo si existe una URL configurada
+        if (WEBHOOK_URL && WEBHOOK_URL.trim() !== '') {
+          await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(leadData)
+          }).catch(err => console.error('Error al enviar webhook:', err));
+        }
+
+        // 3. Concatenar mensaje dinámico para WhatsApp
+        let mensaje = '';
+        if (typeof WA_TEMPLATE !== 'undefined' && WA_TEMPLATE[lang]) {
+          mensaje = WA_TEMPLATE[lang](nombre, servicio);
+        } else {
+          mensaje = lang === 'en' 
+            ? `Hello Codevam, my name is ${nombre}. I would like to get a quote for a project: ${servicio}.`
+            : `Hola Codevam, mi nombre es ${nombre}. Quisiera cotizar un proyecto de: ${servicio}.`;
+        }
+
+        const textEncoded = encodeURIComponent(mensaje);
+        const waUrl = `https://api.whatsapp.com/send/?phone=573156793777&text=${textEncoded}`;
+
+        // 4. Redirigir a gracias.html
+        window.location.href = `gracias.html?redirect=${encodeURIComponent(waUrl)}`;
+
+      } catch (error) {
+        console.error('Error en el envío:', error);
+        // Respaldo de redirección directa a WhatsApp
+        const fallbackMsg = encodeURIComponent(`Hola Codevam, mi nombre es ${nombre}. Quisiera cotizar: ${servicio}.`);
+        window.location.href = `https://api.whatsapp.com/send/?phone=573156793777&text=${fallbackMsg}`;
+      } finally {
+        // Restaurar estado del botón si permanece en pantalla
+        setTimeout(() => {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS.modal_submit_btn) 
+              ? (TRANSLATIONS.modal_submit_btn[lang] || 'Iniciar chat en WhatsApp') 
+              : 'Iniciar chat en WhatsApp';
+          }
+        }, 2500);
+      }
+    });
+  }
+});

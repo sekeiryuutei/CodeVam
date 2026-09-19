@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirigiendo a WhatsApp... | Code Vam</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: #25D366;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        a {
+            color: #25D366;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Leer los parámetros de la URL actual (ej: gracias.html?redirect=https://api.whatsapp.com...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+
+            // 2. Si existe el parámetro, se usa esa URL; si no, entra un mensaje de respaldo
+            let waUrl = redirectUrl;
+            if (!waUrl) {
+                waUrl = "https://api.whatsapp.com/send/?phone=573156793777&text=Hola%20Codevam%2C%20quisiera%20cotizar%20un%20proyecto.";
+            }
+
+            // 3. Actualizar el enlace manual en el HTML por si falla la redirección automática
+            const manualLink = document.querySelector('p small a');
+            if (manualLink) {
+                manualLink.href = waUrl;
+            }
+
+            // 4. Redirigir automáticamente a WhatsApp tras 500ms para registrar la conversión en Google Ads
+            setTimeout(() => {
+                window.location.href = waUrl;
+            }, 500);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="spinner"></div>
+    <h2>¡Gracias por comunicarte con Code Vam!</h2>
+    <p>Te estamos redirigiendo a WhatsApp para iniciar la conversación...</p>
+    <p><small>Si no abre automáticamente, <a
+                href="https://api.whatsapp.com/send/?phone=573156793777&text=Hi%2C+I%27d+like+to+tell+you+about+my+project&type=phone_number&app_absent=0">haz
+                clic aquí</a>.</small></p>
+</body>
+
+</html>

@@ -1,26 +1,13 @@
 /*
   codevam — internacionalización (ES/EN)
-  ---------------------------------------
-  Traduce el contenido marcado con [data-i18n] / [data-i18n-html] usando el
-  diccionario TRANSLATIONS de abajo. Guarda el idioma elegido en localStorage
-  para recordarlo en la siguiente visita.
-
-  Para agregar un texto nuevo al sistema de idiomas:
-  1. Agrega data-i18n="mi_clave" al elemento en index.html (o data-i18n-html
-     si el texto tiene etiquetas HTML adentro, como <br> o <span>).
-  2. Agrega la clave acá abajo con su versión "es" y "en".
-
-  Expone window.codevamLang (idioma activo) y escucha window.codevamTerminal
-  (definido en script.js) para actualizar el terminal del hero sin repetir
-  la animación de escritura en cada cambio de idioma.
 */
 
 var TRANSLATIONS = {
   nav_servicios: { es: 'servicios', en: 'services' },
   nav_productos: { es: 'productos', en: 'products' },
-  nav_clientes:  { es: 'clientes',  en: 'clients' },
-  nav_proceso:   { es: 'proceso',   en: 'process' },
-  nav_hablemos:  { es: 'hablemos',  en: "let's talk" },
+  nav_clientes: { es: 'clientes', en: 'clients' },
+  nav_proceso: { es: 'proceso', en: 'process' },
+  nav_hablemos: { es: 'hablemos', en: 'lets talk' },
 
   hero_eyebrow: { es: 'estudio de desarrollo de software', en: 'software development studio' },
   hero_h1: {
@@ -64,7 +51,7 @@ var TRANSLATIONS = {
 
   tag_07: { es: '07 · excel', en: '07 · excel' },
   card7_h3: { es: 'Excel y hojas de cálculo', en: 'Excel and spreadsheets' },
-  card7_p: { es: 'Fórmulas, tablas dinámicas y automatización de hojas de cálculo — te las armo o te enseño a manejarlas, según lo que necesites.', en: "Formulas, pivot tables, and spreadsheet automation — I'll build them for you or teach you to use them, whatever you need." },
+  card7_p: { es: 'Fórmulas, tablas dinámicas y automatización de hojas de cálculo — te las armo o te enseño a manejarlas, según lo que necesites.', en: 'Formulas, pivot tables, and spreadsheet automation — I will build them for you or teach you to use them.' },
 
   proceso_eyebrow: { es: 'cómo trabajamos', en: 'how we work' },
   proceso_h2: { es: 'Cuatro pasos, sin sorpresas en el camino.', en: 'Four steps, no surprises along the way.' },
@@ -73,18 +60,18 @@ var TRANSLATIONS = {
   proc2_h3: { es: 'Propuesta', en: 'Proposal' },
   proc2_p: { es: 'Te compartimos alcance, tiempos y costo claro antes de escribir una sola línea de código.', en: 'We share scope, timeline, and a clear cost before writing a single line of code.' },
   proc3_h3: { es: 'Desarrollo', en: 'Development' },
-  proc3_p: { es: 'Construimos por etapas, con avances visibles para que veas el progreso real del producto.', en: "We build in stages, with visible progress so you can see the product's real progress." },
+  proc3_p: { es: 'Construimos por etapas, con avances visibles para que veas el progreso real del producto.', en: 'We build in stages, with visible progress so you can see the real progress.' },
   proc4_h3: { es: 'Entrega y soporte', en: 'Delivery and support' },
   proc4_p: { es: 'Lanzamos, te capacitamos en el uso y quedamos disponibles para ajustes posteriores.', en: 'We launch, train you on how to use it, and stay available for later adjustments.' },
 
   why_eyebrow: { es: 'por qué codevam', en: 'why codevam' },
   why_h2: { es: 'Un desarrollador que entiende de negocio, no solo de código.', en: 'A developer who understands business, not just code.' },
   why1_h3: { es: 'Hecho a la medida', en: 'Built to fit' },
-  why1_p: { es: 'Cada proyecto se diseña desde cero para tu proceso, no se adapta un molde genérico.', en: "Every project is designed from scratch around your process — it's never squeezed into a generic template." },
+  why1_p: { es: 'Cada proyecto se diseña desde cero para tu proceso, no se adapta un molde genérico.', en: 'Every project is designed from scratch around your process — never squeezed into a generic template.' },
   why2_h3: { es: 'Comunicación directa', en: 'Direct communication' },
   why2_p: { es: 'Hablas siempre con quien construye tu producto, en un lenguaje claro y sin tecnicismos innecesarios.', en: 'You always talk directly with whoever is building your product, in plain language without unnecessary jargon.' },
   why3_h3: { es: 'Acompañamiento real', en: 'Real support' },
-  why3_p: { es: 'No desaparecemos después de la entrega: seguimos disponibles para soporte y mejoras.', en: "We don't disappear after delivery — we stay available for support and improvements." },
+  why3_p: { es: 'No desaparecemos después de la entrega: seguimos disponibles para soporte y mejoras.', en: 'We do not disappear after delivery — we stay available for support and improvements.' },
 
   productos_eyebrow: { es: 'nuestros productos', en: 'our products' },
   productos_h2: { es: 'Además de proyectos a la medida, construimos nuestras propias soluciones.', en: 'Besides custom projects, we also build our own products.' },
@@ -98,7 +85,7 @@ var TRANSLATIONS = {
   feat6: { es: 'Informes y analítica de ventas', en: 'Sales reports and analytics' },
   product_cta: { es: 'Quiero enterarme cuando esté disponible', en: 'Notify me when it launches' },
   mock_title: { es: 'vitriniando — panel de tienda', en: 'vitriniando — store dashboard' },
-  mock_label1: { es: 'ventas de hoy', en: "today's sales" },
+  mock_label1: { es: 'ventas de hoy', en: 'todays sales' },
   mock_value1: { es: '$1.240.000', en: '$1,240,000' },
   mock_label2: { es: 'pago recibido por PSE', en: 'payment received via PSE' },
   mock_value2: { es: 'confirmado ✓', en: 'confirmed ✓' },
@@ -109,33 +96,52 @@ var TRANSLATIONS = {
   clientes_eyebrow: { es: 'clientes', en: 'clients' },
   clientes_h2: { es: 'Sitios y sistemas que ya están en producción.', en: 'Sites and systems already in production.' },
   tag_prod: { es: 'en producción', en: 'in production' },
-  client1_p: { es: 'Sitio y portafolio profesional de Victor Burbano.', en: "Victor Burbano's professional site and portfolio." },
+  client1_p: { es: 'Sitio y portafolio profesional de Victor Burbano.', en: 'Victor Burbano professional site and portfolio.' },
   client2_p: { es: 'Sitio web a medida para Villa Juana.', en: 'Custom website for Villa Juana.' },
   client3_p: { es: 'Spa y centro de estética.', en: 'Spa and aesthetics center.' },
   client4_p: { es: 'Sitio web corporativo para Intergroup.', en: 'Corporate website for Intergroup.' },
 
   otros_eyebrow: { es: 'otros proyectos', en: 'other projects' },
-  otros_h3: { es: 'Software adicional que también hemos construido.', en: "More software we've also built." },
-  proj1_p: { es: 'Sistema de gestión de almacenes (WMS) para la operación logística de Herpo.', en: "Warehouse management system (WMS) for Herpo's logistics operation." },
+  otros_h3: { es: 'Software adicional que también hemos construido.', en: 'More software we have also built.' },
+  proj1_p: { es: 'Sistema de gestión de almacenes (WMS) para la operación logística de Herpo.', en: 'Warehouse management system (WMS) for Herpo logistics.' },
   ptag2: { es: 'gestión de proyectos', en: 'project management' },
-  proj2_p: { es: 'Plataforma web para centralizar la planeación, el seguimiento y el control climático del cronograma de energización de proyectos eléctricos residenciales.', en: 'Web platform to centralize the planning, tracking, and weather-driven control of the energization schedule for residential electrical projects.' },
+  proj2_p: { es: 'Plataforma web para centralizar la planeación, el seguimiento y el control climático del cronograma de energización de proyectos eléctricos.', en: 'Web platform to centralize planning, tracking, and weather control for electrical project schedules.' },
   ptag3: { es: 'en pruebas', en: 'in testing' },
-  proj3_p: { es: 'Sistema para agendar visitas técnicas con freelancers externos: controla el estado de cada cita y envía notificaciones automáticas por correo.', en: 'System for scheduling technical visits with outside freelancers: tracks the status of each visit and sends automatic email notifications.' },
+  proj3_p: { es: 'Sistema para agendar visitas técnicas con freelancers externos: controla el estado de cada cita y envía notificaciones automáticas por correo.', en: 'System for scheduling technical visits with external freelancers: tracks visit status and sends automatic email notifications.' },
   ptag4: { es: 'servicios técnicos', en: 'technical services' },
-  proj4_p: { es: 'Página para vender instalación de cámaras de vigilancia, conexiones eléctricas y redes.', en: 'Page for selling surveillance camera installation, electrical wiring, and networking services.' },
+  proj4_p: { es: 'Página para vender instalación de cámaras de vigilancia, conexiones eléctricas y redes.', en: 'Page for selling surveillance camera installation, electrical wiring, and networking.' },
 
-  contacto_eyebrow: { es: 'empecemos', en: "let's start" },
+  contacto_eyebrow: { es: 'empecemos', en: 'let us start' },
   contacto_h2: { es: '¿Tienes un proyecto en mente?', en: 'Have a project in mind?' },
-  contacto_p: { es: 'Cuéntame qué necesitas y te respondo con una primera idea de alcance y tiempos, sin costo.', en: "Tell me what you need and I'll get back to you with an initial idea of scope and timeline, at no cost." },
+  contacto_p: { es: 'Cuéntame qué necesitas y te respondo con una primera idea de alcance y tiempos, sin costo.', en: 'Tell me what you need and I will reply with an initial idea of scope and timeline, free of charge.' },
   wa_cta: { es: 'Escríbenos por WhatsApp', en: 'Message us on WhatsApp' },
   contacto_cta_secondary: { es: 'Ver todos los servicios', en: 'View all services' },
 
-  footer_tagline: { es: 'Software a medida.', en: 'Custom software.' }
+  footer_tagline: { es: 'Software a medida.', en: 'Custom software.' },
+
+  /* --- TRADUCCIONES DEL MODAL --- */
+  modal_title: { es: 'Inicia tu consulta por WhatsApp', en: 'Start your inquiry on WhatsApp' },
+  modal_subtitle: { es: 'Déjanos tus datos para agilizar tu respuesta:', en: 'Provide your details to speed up your response:' },
+  modal_label_name: { es: 'Tu Nombre o Empresa *', en: 'Your Name or Company *' },
+  modal_placeholder_name: { es: 'Ej: Carlos Pérez', en: 'E.g., John Doe' },
+  modal_label_service: { es: '¿Qué tipo de proyecto necesitas?', en: 'What type of project do you need?' },
+  modal_opt_1: { es: 'Software a medida', en: 'Custom software' },
+  modal_opt_2: { es: 'Sitio / Aplicación Web', en: 'Website / Web App' },
+  modal_opt_3: { es: 'Aplicación Móvil', en: 'Mobile App' },
+  modal_opt_4: { es: 'Automatizaciones / Integraciones', en: 'Automations / Integrations' },
+  modal_opt_5: { es: 'Otro tipo de consulta', en: 'Other inquiry' },
+  modal_submit_btn: { es: 'Iniciar chat en WhatsApp', en: 'Start WhatsApp Chat' },
+  modal_processing: { es: 'Procesando...', en: 'Processing...' }
 };
 
-var WA_MESSAGE = {
-  es: 'Hola, quiero contarte sobre mi proyecto',
-  en: "Hi, I'd like to tell you about my project"
+/* Plantillas para el mensaje concatenado que se envía a WhatsApp */
+var WA_TEMPLATE = {
+  es: function (nombre, servicio) {
+    return 'Hola Codevam, mi nombre es ' + nombre + '. Quisiera cotizar un proyecto de: ' + servicio + '.';
+  },
+  en: function (nombre, servicio) {
+    return 'Hello Codevam, my name is ' + nombre + '. I would like to get a quote for a project: ' + servicio + '.';
+  }
 };
 
 var TITLES = {
@@ -143,49 +149,51 @@ var TITLES = {
   en: 'Codevam — custom software development in Colombia'
 };
 
-function applyLanguage(lang){
-  document.querySelectorAll('[data-i18n]').forEach(function(el){
+function applyLanguage(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
     var entry = TRANSLATIONS[el.getAttribute('data-i18n')];
-    if(entry) el.textContent = entry[lang] || entry.es;
+    if (entry) el.textContent = entry[lang] || entry.es;
   });
-  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+  document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
     var entry = TRANSLATIONS[el.getAttribute('data-i18n-html')];
-    if(entry) el.innerHTML = entry[lang] || entry.es;
+    if (entry) el.innerHTML = entry[lang] || entry.es;
   });
 
-  document.querySelectorAll('.wa-link').forEach(function(el){
-    el.href = 'https://wa.me/573156793777?text=' + encodeURIComponent(WA_MESSAGE[lang] || WA_MESSAGE.es);
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+    var entry = TRANSLATIONS[el.getAttribute('data-i18n-placeholder')];
+    if (entry) el.setAttribute('placeholder', entry[lang] || entry.es);
   });
+
   var waFloat = document.querySelector('.whatsapp-float');
-  if(waFloat) waFloat.setAttribute('aria-label', TRANSLATIONS.wa_cta[lang] || TRANSLATIONS.wa_cta.es);
+  if (waFloat) waFloat.setAttribute('aria-label', TRANSLATIONS.wa_cta[lang] || TRANSLATIONS.wa_cta.es);
 
   document.documentElement.lang = lang;
   document.title = TITLES[lang] || TITLES.es;
 
   var toggle = document.querySelector('.lang-toggle');
-  if(toggle){
-    toggle.querySelectorAll('[data-lang]').forEach(function(opt){
+  if (toggle) {
+    toggle.querySelectorAll('[data-lang]').forEach(function (opt) {
       opt.classList.toggle('is-active', opt.getAttribute('data-lang') === lang);
     });
   }
 
-  if(window.codevamTerminal) window.codevamTerminal.renderStatic(lang);
+  if (window.codevamTerminal) window.codevamTerminal.renderStatic(lang);
   window.codevamLang = lang;
 }
 
-document.addEventListener('click', function(e){
+document.addEventListener('click', function (e) {
   var opt = e.target.closest('[data-lang]');
-  if(!opt) return;
+  if (!opt) return;
   var lang = opt.getAttribute('data-lang');
-  if(lang === window.codevamLang) return;
-  try { localStorage.setItem('codevam_lang', lang); } catch(e2) { /* localStorage no disponible */ }
+  if (lang === window.codevamLang) return;
+  try { localStorage.setItem('codevam_lang', lang); } catch (e2) { /* localStorage no disponible */ }
   applyLanguage(lang);
 });
 
 var initialLang = 'es';
 try {
-  if(localStorage.getItem('codevam_lang') === 'en') initialLang = 'en';
-} catch(e3) { /* localStorage no disponible, se usa español por defecto */ }
+  if (localStorage.getItem('codevam_lang') === 'en') initialLang = 'en';
+} catch (e3) { /* localStorage no disponible */ }
 
 window.codevamLang = initialLang;
 applyLanguage(initialLang);
