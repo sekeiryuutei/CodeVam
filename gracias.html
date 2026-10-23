@@ -4,10 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirigiendo a WhatsApp... | Code Vam</title>
+    <meta name="robots" content="noindex, nofollow">
+    <title>Redirigiendo a WhatsApp | Codevam</title>
     <style>
+        :root {
+            --slate: #0B1220;
+            --slate-2: #111C33;
+            --cyan: #22D3EE;
+            --gray: #94A3B8;
+            --green: #25D366;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #0d1117;
+            background-color: var(--slate);
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
@@ -17,53 +30,140 @@
             min-height: 100vh;
             margin: 0;
             text-align: center;
-            padding: 20px;
+            padding: 24px;
+        }
+
+        .mark {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: var(--slate-2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "JetBrains Mono", Consolas, monospace;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--cyan);
+            margin-bottom: 24px;
         }
 
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            border-left-color: #25D366;
+            border-left-color: var(--green);
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
+            to {
                 transform: rotate(360deg);
             }
         }
 
+        h1 {
+            font-size: 24px;
+            line-height: 1.25;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--gray);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 10px;
+            max-width: 460px;
+        }
+
         a {
-            color: #25D366;
+            color: var(--green);
             text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: #4ade80;
+        }
+
+        small {
+            font-size: 13px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .spinner {
+                animation: none;
+            }
         }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Leer los parámetros de la URL actual (ej: gracias.html?redirect=https://api.whatsapp.com...)
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectUrl = urlParams.get('redirect');
+            const copy = {
+                es: {
+                    title: 'Redirigiendo a WhatsApp | Codevam',
+                    heading: 'Gracias por escribir a Codevam',
+                    message: 'Te estamos redirigiendo a WhatsApp para iniciar la conversación.',
+                    manual: 'Si no abre automáticamente, ',
+                    link: 'haz clic aquí',
+                    fallback: 'Hola Codevam, quisiera cotizar un proyecto.'
+                },
+                en: {
+                    title: 'Redirecting to WhatsApp | Codevam',
+                    heading: 'Thanks for reaching out to Codevam',
+                    message: 'We are redirecting you to WhatsApp to start the conversation.',
+                    manual: 'If it does not open automatically, ',
+                    link: 'click here',
+                    fallback: 'Hello Codevam, I would like to quote a project.'
+                }
+            };
 
-            // 2. Si existe el parámetro, se usa esa URL; si no, entra un mensaje de respaldo
-            let waUrl = redirectUrl;
-            if (!waUrl) {
-                waUrl = "https://api.whatsapp.com/send/?phone=573156793777&text=Hola%20Codevam%2C%20quisiera%20cotizar%20un%20proyecto.";
+            const params = new URLSearchParams(window.location.search);
+            let lang = params.get('lang') === 'en' ? 'en' : 'es';
+            if (!params.has('lang')) {
+                try {
+                    if (localStorage.getItem('codevam_lang') === 'en') lang = 'en';
+                } catch (error) {
+                    /* localStorage no disponible */
+                }
+            }
+            const t = copy[lang];
+
+            function fallbackUrl() {
+                return 'https://api.whatsapp.com/send/?phone=573156793777&text=' + encodeURIComponent(t.fallback);
             }
 
-            // 3. Actualizar el enlace manual en el HTML por si falla la redirección automática
-            const manualLink = document.querySelector('p small a');
+            function safeWhatsAppUrl(value) {
+                if (!value) return '';
+                try {
+                    const url = new URL(value, window.location.origin);
+                    const allowedHosts = ['api.whatsapp.com', 'wa.me', 'web.whatsapp.com'];
+                    if (url.protocol !== 'https:' || !allowedHosts.includes(url.hostname)) return '';
+                    return url.href;
+                } catch (error) {
+                    return '';
+                }
+            }
+
+            const waUrl = safeWhatsAppUrl(params.get('redirect')) || fallbackUrl();
+
+            document.documentElement.lang = lang;
+            document.title = t.title;
+            const heading = document.getElementById('wa-heading');
+            if (heading) heading.textContent = t.heading;
+            const message = document.getElementById('wa-message');
+            if (message) message.textContent = t.message;
+            const manualText = document.getElementById('wa-manual-text');
+            if (manualText) manualText.textContent = t.manual;
+            const manualLink = document.getElementById('wa-manual-link');
             if (manualLink) {
                 manualLink.href = waUrl;
+                manualLink.textContent = t.link;
             }
 
-            // 4. Redirigir automáticamente a WhatsApp tras 500ms para registrar la conversión en Google Ads
             setTimeout(() => {
                 window.location.href = waUrl;
             }, 500);
@@ -72,11 +172,12 @@
 </head>
 
 <body>
-    <div class="spinner"></div>
-    <h2>¡Gracias por comunicarte con Code Vam!</h2>
-    <p>Te estamos redirigiendo a WhatsApp para iniciar la conversación...</p>
-    <p><small>Si no abre automáticamente, <a
-                href="https://api.whatsapp.com/send/?phone=573156793777&text=Hi%2C+I%27d+like+to+tell+you+about+my+project&type=phone_number&app_absent=0">haz
+    <div class="mark">&gt;_</div>
+    <div class="spinner" aria-hidden="true"></div>
+    <h1 id="wa-heading">Gracias por escribir a Codevam</h1>
+    <p id="wa-message">Te estamos redirigiendo a WhatsApp para iniciar la conversación.</p>
+    <p><small><span id="wa-manual-text">Si no abre automáticamente, </span><a id="wa-manual-link"
+                href="https://api.whatsapp.com/send/?phone=573156793777&amp;text=Hola%20Codevam%2C%20quisiera%20cotizar%20un%20proyecto.">haz
                 clic aquí</a>.</small></p>
 </body>
 
